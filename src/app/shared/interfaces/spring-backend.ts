@@ -1,8 +1,11 @@
 export interface User {
-    givenName: string,
-    surName: string,
-    email: string,
-    password: string
+    username: string,
+    password: string,
+    firstname: string,
+    lastname: string,
+    email:string,
+    birthdate:string,
+    countryName:string
 }
 
 export interface Credentials {
@@ -11,11 +14,19 @@ export interface Credentials {
 }
 
 export interface LoggedInUser {
+    sub:string;
     firstname: string;
     email: string;
     dateOfBirth: string;
     countryName: string;
     token: string;
     role:string;
-    sub:string;
+    username:string;
+}
+
+export interface ValidationErrorResponse {
+    code: string;
+    details: string[];
+    message: string;
+    timestamp: string;
 }

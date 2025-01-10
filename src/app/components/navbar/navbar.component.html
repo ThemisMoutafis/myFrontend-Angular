@@ -1,5 +1,7 @@
 <nav class="navbar navbar-dark bg-primary justify-content-between">
-    <a class="navbar-brand ms-3 cursor-pointer" role="button" routerLink="">Welcome to the Hub</a>
+    <a class="navbar-brand ms-3 cursor-pointer" role="button" routerLink="home">
+        <mat-icon>home</mat-icon> <!-- Home icon -->
+    </a>
 
     @if(user()) {
         <span class="me-3 d-flex gap-2 text-light">
@@ -10,10 +12,15 @@
     } @else {
 
         <span class="me-3 d-flex gap-2 text-light align-items-center">
-            Login
+            <mat-icon role="button" class="icon-link-hover" routerLink="register">
+                person_add
+            </mat-icon>
+            <a routerLink="register" class="text-light text-decoration-none">Register now!</a> <!-- Make the text clickable -->
             <mat-icon role="button" class="icon-link-hover" routerLink="login">
                 login
             </mat-icon>
+            <a routerLink="login" class="text-light text-decoration-none">login</a> <!-- Make the text clickable -->
         </span>
-        }
+        
+    }
 </nav>

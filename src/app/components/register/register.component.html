@@ -1,1 +1,93 @@
-<p>register works!</p>
+@if (!registrationStatus.success) {
+  <div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="d-flex flex-column mt-2 w-50">
+      <!-- Show Error Message -->
+      @if (
+        registrationStatus.message !== "Not attempted yet" &&
+        !registrationStatus.success
+      ) {
+        <div class="alert alert-danger">
+          <strong>Error: </strong>{{ registrationStatus.message }}
+        </div>
+      }
+
+      <!-- Registration Form -->
+      <form [formGroup]="form" class="d-flex flex-column">
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="username" />
+          <mat-error>Username is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input matInput type="text" formControlName="firstname" />
+          <mat-error>First Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput type="text" formControlName="lastname" />
+          <mat-error>Last Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput type="text" formControlName="email" />
+          <mat-error>Email is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Birthdate</mat-label>
+          <input matInput type="date" formControlName="birthdate" />
+          <mat-error>Birthdate is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <input matInput type="text" formControlName="countryName" />
+          <mat-error>Country is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error>Password is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" formControlName="confirmPassword" />
+          @if (form.get("confirmPassword")?.hasError("passwordMismatch")) {
+            <mat-error>Passwords do not match</mat-error>
+          }
+        </mat-form-field>
+
+        <button
+          mat-flat-button
+          (click)="onSubmit(form.value)"
+          [disabled]="form.invalid"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+  </div>
+} @else {
+  <!-- Success Message -->
+<div class="d-flex flex-column justify-content-center align-items-center mt-5">
+  <div class="alert alert-success mt-2 w-50">
+    <strong>Success: </strong>{{ registrationStatus.message }}
+  </div>
+  <div>
+  <button
+    mat-flat-button
+    color="primary"
+    class="mt-2"
+    (click)="registerAnother()"
+  >
+    Go Back
+  </button>
+</div>
+</div>
+}

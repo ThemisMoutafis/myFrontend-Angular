@@ -35,21 +35,24 @@ export class LoginComponent {
   
         // Store the token in localStorage
         localStorage.setItem('access_token', access_token);
-        const decodedTokenSubject: { role: string, sub: string } = jwtDecode(access_token)
+        const decodedTokenSubject: { role: string, sub: string,firstname:string,email:string,dateOfBirth:string,countryName:string ,username:string} = jwtDecode(access_token)
           // .sub as unknown as LoggedInUser;
           console.log(decodedTokenSubject)
         // Set user details directly from the response
         this.userService.user.set({
-          firstname: response.firstname,
-          email: response.email,
-          dateOfBirth: response.dateOfBirth,
-          countryName: response.countryName,
+          firstname: decodedTokenSubject.firstname,
+          username:decodedTokenSubject.username,
+          email: decodedTokenSubject.email,
+          dateOfBirth: decodedTokenSubject.dateOfBirth,
+          countryName: decodedTokenSubject.countryName,
           role: decodedTokenSubject.role,  // Extracted from the JWT
           sub: decodedTokenSubject.sub,    // Extracted from the JWT
           token: access_token,      // Save the JWT token itself
         })
         console.log('User Logged in:', this.userService.user());
-        this.router.navigate(['welcome'])
+        if(this.userService.user()?.role =='ADMIN')
+        this.router.navigate(['administration'])
+        else this.router.navigate(['home'])
   
       },
       error: (error)=> {

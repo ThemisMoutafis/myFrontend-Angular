@@ -1,11 +1,14 @@
 import { inject, Injectable ,signal, effect} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
-import { Credentials, LoggedInUser, User } from '../interfaces/spring-backend';
+import { Credentials, LoggedInUser, User,ValidationErrorResponse } from '../interfaces/spring-backend';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
-const API_URL = `${environment.apiURL}/api/auth`
+const API_URL = `${environment.apiURL}`
 
 @Injectable({
     providedIn: 'root'
@@ -17,20 +20,41 @@ const API_URL = `${environment.apiURL}/api/auth`
       user = signal<LoggedInUser | null>(null)
   
       constructor() {
-        const access_token = localStorage.getItem("access_token")
-        
-  
-        effect(() =>{
-          if (this.user()){
-            console.log("User Logged in", this.user()?.sub)
+        const access_token = localStorage.getItem("access_token");
+        if (access_token) {
+          const decodedTokenSubject = jwtDecode<LoggedInUser>(access_token);
+          console.log("Decoded token:", decodedTokenSubject);  // Log the decoded token
+    
+          this.user.set({
+            sub:decodedTokenSubject.sub,
+            username: decodedTokenSubject.username,
+            firstname: decodedTokenSubject.firstname,
+            email: decodedTokenSubject.email,
+            dateOfBirth: decodedTokenSubject.dateOfBirth,
+            countryName: decodedTokenSubject.countryName,
+            token: access_token,
+            role: decodedTokenSubject.role
+          });
+        }
+    
+        effect(() => {
+          const user = this.user();
+          console.log("User state:", user);  // Check if user is set correctly
+          if (user) {
+            console.log("User Logged in:", user.username);
           } else {
-            console.log("No user logged in")
+            console.log("No user logged in");
           }
-        })
+        });
       }
   
       registerUser(user: User) {
-        return this.http.post<{msg:string}>(`${API_URL}/register`,user)
+        return this.http.post<{msg: string}>(`${API_URL}/api/users/save`, user).pipe(
+          catchError((error: HttpErrorResponse) => {
+              const errorResponse: ValidationErrorResponse = error.error;
+              return throwError(() => errorResponse);
+          })
+      );
       }
   
       check_duplicate_email(email:string) {
@@ -42,7 +66,7 @@ const API_URL = `${environment.apiURL}/api/auth`
             email: string;
             dateOfBirth: string;
             countryName: string;
-            token: string;}>(`${API_URL}/login`, credentials)
+            token: string;}>(`${API_URL}/api/auth/login`, credentials)
       }
   
       logoutUser(){

@@ -1,10 +1,10 @@
 import { inject, Injectable ,signal, effect} from '@angular/core';
 import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
-import { Credentials, LoggedInUser, User,ValidationErrorResponse } from '../interfaces/spring-backend';
+import { Credentials, LoggedInUser, ReadUser, User,ValidationErrorResponse,PaginatedResponse,PaginatedResult } from '../interfaces/spring-backend';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Observable } from 'rxjs';
 
@@ -57,18 +57,39 @@ const API_URL = `${environment.apiURL}`
       );
       }
   
-      check_duplicate_email(email:string) {
-        return this.http.get<{msg: string}>(`${API_URL}/check_duplicate_email/${email}`)
+      getAllUsersPaginated(page: number = 0, size: number = 5): Observable<PaginatedResult<ReadUser>>{
+        return this.http.get<PaginatedResponse<ReadUser>>(`${API_URL}/api/users?page=${page}&size=${size}`)
+        .pipe(map(response =>({users: response.content,totalPages:response.totalPages})));
       }
   
       loginUser(credentials: Credentials){
-        return this.http.post<{ firstname: string;
-            email: string;
-            dateOfBirth: string;
-            countryName: string;
-            token: string;}>(`${API_URL}/api/auth/login`, credentials)
+        return this.http.post<{token: string;}>(`${API_URL}/api/auth/login`, credentials)
       }
-  
+      
+      activateUser(username:string):Observable<void>{
+        return this.http.put<void>(`${API_URL}/api/user/${username}/activate`, {}).pipe(
+          tap(() => {
+            console.log('User activated successfully');
+          })
+        );
+      }
+
+      deactivateUser(username:string):Observable<void>{
+        return this.http.put<void>(`${API_URL}/api/user/${username}/deactivate`, {}).pipe(
+          tap(() => {
+            console.log('User deactivated successfully');
+          })
+        );
+      }
+
+      deleteUser(id:number):Observable<void>{
+        return this.http.delete<void>(`${API_URL}/api/user/${id}/delete`, {}).pipe(
+          tap(() => {
+            console.log('User deleted successfully');
+          })
+        );
+      }
+
       logoutUser(){
         this.user.set(null);
         localStorage.removeItem('access_token');

@@ -1,1 +1,54 @@
-<p>administration works!</p>
+<div class="d-flex justify-content-center align-items-center">
+ 
+<div class="container text-center">
+    <h3>Welcome to the administration page</h3>
+    <div>
+    <button class="btn btn-secondary my-2" (click)="getUsers()">Get Users</button>
+    </div>
+  @if (users.length) {
+    <table  class="table table-striped mx-auto w-50">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Active</th>
+          <th>Country</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(user of users; track user.id) {
+        <tr class="mx-2 my-2">
+          <td class="ps-2">{{ user.id }}</td>
+          <td class="ps-2">{{ user.username }}</td>
+          <td class="ps-2">{{ user.firstname }}</td>
+          <td class="ps-2">{{ user.lastname }}</td>
+          <td class="ps-2">{{ user.email }}</td>
+          <td class="ps-2">{{ user.active ? 'Yes' : 'No' }}</td>
+          <td class="ps-2">{{ user.countryName }}</td>
+          <td class="d-flex">
+            <button class="btn btn-warning me-2 "(click)="deactivateUser(user.username)">Deactivate</button>
+            <button class="btn btn-success me-2" (click)="activateUser(user.username)">Activate</button>
+            <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+          </td>
+        </tr>
+    }
+      </tbody>
+    </table>
+}
+@if (users.length === 0) {
+    <p>No users available.</p>
+}
+@if (users.length) {
+<button class="btn btn-secondary mt-5 mx-2" (click)="prevPage()" [disabled]="currentPage === 0">
+    ← Previous
+  </button>
+
+  <button class="btn btn-secondary mt-5 mx-2" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+    Next →
+  </button>
+}
+  </div>
+</div>

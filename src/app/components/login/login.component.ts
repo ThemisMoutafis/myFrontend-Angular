@@ -19,6 +19,7 @@ export class LoginComponent {
   router = inject(Router);
 
   invalidLogin = false;
+  loginError: string | null = null;
   form = new FormGroup ({
 
     username: new FormControl('',[Validators.required]),
@@ -56,8 +57,9 @@ export class LoginComponent {
   
       },
       error: (error)=> {
-        console.log('Login Error',error)
+        console.log('Login Error:',error.message)
         this.invalidLogin = true;
+        this.loginError = error.message;
       }
     })
   }

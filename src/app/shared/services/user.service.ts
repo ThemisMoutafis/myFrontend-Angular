@@ -63,7 +63,12 @@ const API_URL = `${environment.apiURL}`
       }
   
       loginUser(credentials: Credentials){
-        return this.http.post<{token: string;}>(`${API_URL}/api/auth/login`, credentials)
+        return this.http.post<{token: string;}>(`${API_URL}/api/auth/login`, credentials).pipe(
+          catchError((error: HttpErrorResponse) => {
+              const errorResponse: ValidationErrorResponse = error.error;
+              return throwError(() => errorResponse);
+          })
+        );
       }
       
       activateUser(username:string):Observable<void>{

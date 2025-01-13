@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { User } from '../../shared/interfaces/spring-backend';
 import { UserService } from '../../shared/services/user.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -27,7 +28,7 @@ import { UserService } from '../../shared/services/user.service';
 })
 export class RegisterComponent {
   userService = inject(UserService);
-
+  router = inject(Router);
   registrationStatus: { success: boolean; message: string } = {
     success: false,
     message: 'Not attempted yet',
@@ -76,22 +77,6 @@ export class RegisterComponent {
     this.registrationStatus.message = 'Not attempted yet';
   }
 
-  // check_duplicate_email() {
-  //   const email = this.form.get('email')?.value;
-  //   if (email) {
-  //     this.userService.check_duplicate_email(email).subscribe({
-  //       next: (response) => {
-  //         console.log('success:', response.msg);
-  //         this.form.get('email')?.setErrors(null); // Clear errors if no duplicate
-  //       },
-  //       error: (response) => {
-  //         console.log('error:', response.msg);
-  //         this.form.get('email')?.setErrors({ duplicateEmail: true }); // Set error if duplicate
-  //       },
-  //     });
-  //   }
-  // }
-  
   checkOnSubmit() {
     const email = this.form.get('email')?.value;
     const countryName = this.form.get('countryName')?.value;

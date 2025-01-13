@@ -1,7 +1,7 @@
 import { inject, Injectable ,signal, effect} from '@angular/core';
 import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
-import { Credentials, LoggedInUser, ReadUser, User,ValidationErrorResponse,PaginatedResponse,PaginatedResult } from '../interfaces/spring-backend';
+import { Credentials, LoggedInUser, ReadUser,UpdateUser, User,ValidationErrorResponse,PaginatedResponse,PaginatedResult } from '../interfaces/spring-backend';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -29,6 +29,7 @@ const API_URL = `${environment.apiURL}`
             sub:decodedTokenSubject.sub,
             username: decodedTokenSubject.username,
             firstname: decodedTokenSubject.firstname,
+            lastname: decodedTokenSubject.lastname,
             email: decodedTokenSubject.email,
             dateOfBirth: decodedTokenSubject.dateOfBirth,
             countryName: decodedTokenSubject.countryName,
@@ -50,6 +51,15 @@ const API_URL = `${environment.apiURL}`
   
       registerUser(user: User) {
         return this.http.post<{msg: string}>(`${API_URL}/api/users/save`, user).pipe(
+          catchError((error: HttpErrorResponse) => {
+              const errorResponse: ValidationErrorResponse = error.error;
+              return throwError(() => errorResponse);
+          })
+      );
+      }
+
+      updateUser(username:String,user:UpdateUser) {
+        return this.http.put<{token:string}>(`${API_URL}/api/user/${username}/update`,user).pipe(
           catchError((error: HttpErrorResponse) => {
               const errorResponse: ValidationErrorResponse = error.error;
               return throwError(() => errorResponse);

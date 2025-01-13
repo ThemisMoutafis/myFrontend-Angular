@@ -36,12 +36,13 @@ export class LoginComponent {
   
         // Store the token in localStorage
         localStorage.setItem('access_token', access_token);
-        const decodedTokenSubject: { role: string, sub: string,firstname:string,email:string,dateOfBirth:string,countryName:string ,username:string} = jwtDecode(access_token)
+        const decodedTokenSubject: { role: string, sub: string,firstname:string,lastname:string,email:string,dateOfBirth:string,countryName:string ,username:string} = jwtDecode(access_token)
           // .sub as unknown as LoggedInUser;
           console.log(decodedTokenSubject)
         // Set user details directly from the response
         this.userService.user.set({
           firstname: decodedTokenSubject.firstname,
+          lastname:decodedTokenSubject.lastname,
           username:decodedTokenSubject.username,
           email: decodedTokenSubject.email,
           dateOfBirth: decodedTokenSubject.dateOfBirth,

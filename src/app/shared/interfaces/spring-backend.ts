@@ -8,6 +8,15 @@ export interface User {
     countryName:string
 }
 
+export interface UpdateUser {
+  password: string,
+  firstname: string,
+  lastname: string,
+  email:string,
+  birthdate:string,
+  countryName:string
+}
+
 export interface ReadUser {
     username: string;
     id: number;
@@ -26,6 +35,7 @@ export interface Credentials {
 export interface LoggedInUser {
     sub:string;
     firstname: string;
+    lastname:string;
     email: string;
     dateOfBirth: string;
     countryName: string;

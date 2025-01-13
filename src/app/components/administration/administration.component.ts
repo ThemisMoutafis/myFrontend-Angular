@@ -11,7 +11,7 @@ import { PaginatedResult } from '../../shared/interfaces/spring-backend';
   styleUrl: './administration.component.css'
 })
 export class AdministrationComponent {
-userService = inject(UserService);
+  userService = inject(UserService);
   user = this.userService.user;
 
   users: ReadUser[] = [];

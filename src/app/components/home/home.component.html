@@ -1,1 +1,12 @@
-<p>home works!</p>
+<h4 class="text-center">Home page works!</h4>
+
+@if(user()?.role == 'ADMIN') {
+    <h5 class="text-center">Only admin sees this button</h5>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="my-2">
+        <button class="btn btn-primary" [routerLink]="'../administration'">administration</button>
+    </div>
+    </div>
+}
+
+

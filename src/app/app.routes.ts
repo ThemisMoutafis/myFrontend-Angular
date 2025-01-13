@@ -5,8 +5,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdministrationComponent } from './components/administration/administration.component';
+import { UserUpdateComponent } from './components/user-update/user-update.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { adminGuard } from './shared/guards/admin.guard';
+import { DeactivateComponent } from './components/deactivate/deactivate.component';
 
 export const routes: Routes = [
     {path:'', redirectTo:'/welcome',pathMatch:'full'},
@@ -15,5 +17,7 @@ export const routes: Routes = [
     {path:'register',component:RegisterComponent},
     {path:'welcome',component:NavbarComponent},
     {path:'home',component:HomeComponent,canActivate:[authGuard]},
-    {path:'administration',component:AdministrationComponent,canActivate:[adminGuard]}
+    {path:'deactivate',component:DeactivateComponent,canActivate:[authGuard]},
+    {path:'administration',component:AdministrationComponent,canActivate:[adminGuard]},
+    {path:'update',component:UserUpdateComponent,canActivate:[authGuard]}
 ];

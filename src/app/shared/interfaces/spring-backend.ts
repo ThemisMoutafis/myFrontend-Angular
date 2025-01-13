@@ -9,7 +9,8 @@ export interface User {
 }
 
 export interface UpdateUser {
-  password: string,
+  oldPassword: string,
+  password?: string,
   firstname: string,
   lastname: string,
   email:string,

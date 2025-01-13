@@ -20,10 +20,6 @@
               <mat-icon>block</mat-icon>
               <span>Deactivate account</span>
             </button>
-            <button mat-menu-item>
-              <mat-icon>dark_mode</mat-icon>
-              <span>Toggle Dark Mode</span>
-            </button>
           </mat-menu>
         <a routerLink="login" class="text-light text-decoration-none"></a>
             Welcome, {{user()?.firstname}}
@@ -45,10 +41,6 @@
                 <button mat-menu-item [routerLink]="'/deactivate'">
                   <mat-icon>block</mat-icon>
                   <span>Deactivate account</span>
-                </button>
-                <button mat-menu-item>
-                  <mat-icon>dark_mode</mat-icon>
-                  <span>Toggle Dark Mode</span>
                 </button>
               </mat-menu>
             <a routerLink="login" class="text-light text-decoration-none"></a>

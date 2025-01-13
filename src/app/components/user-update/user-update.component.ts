@@ -39,13 +39,13 @@ export class UserUpdateComponent {
         birthdate: new FormControl('', Validators.required),
         countryName: new FormControl('', Validators.required),
         email: new FormControl('', [Validators.required, Validators.email]),
+        oldPassword:new FormControl('',[Validators.required,Validators.minLength(8), Validators.pattern('^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[@#$!%&*]).{8,}$')]),
         password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(4),
+          
+          Validators.minLength(8), Validators.pattern('^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[@#$!%&*]).{8,}$')
         ]),
         confirmPassword: new FormControl('', [
-          Validators.required,
-          Validators.minLength(4),
+          Validators.minLength(8), Validators.pattern('^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[@#$!%&*]).{8,}$')
         ]),
       },
       this.passwordConfirmPasswordValidator 
@@ -58,8 +58,9 @@ export class UserUpdateComponent {
           firstname: this.user()?.firstname,
           lastname: this.user()?.lastname,
           email: this.user()?.email,
-          password: '', // Leave password empty for security
-          confirmPassword: '', // Leave confirmPassword empty for security
+          password: '', // empty for security
+          confirmPassword: '', //  for security
+          oldPassword:'',
           birthdate: this.user()?.dateOfBirth,
           countryName: this.user()?.countryName,
         });
@@ -96,11 +97,13 @@ export class UserUpdateComponent {
         firstname: this.form.get('firstname')?.value || '',
         lastname: this.form.get('lastname')?.value || '',
         email: email || '',
-        password: this.form.get('password')?.value || '',
+        oldPassword: this.form.get('oldPassword')?.value || '',
+        password: this.form.get('password')?.value || undefined, 
         birthdate: this.form.get('birthdate')?.value || '',
         countryName: countryName || '',
       };
-  
+      
+      console.log(userUpdate)
     
 
       if (this.user()?.username) {

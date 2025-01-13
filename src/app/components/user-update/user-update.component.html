@@ -43,11 +43,17 @@
             <input matInput type="text" formControlName="countryName" />
             <mat-error>Country is required</mat-error>
           </mat-form-field>
-  
+          
+          <mat-form-field>
+            <mat-label>Old Password</mat-label>
+            <input matInput type="password" formControlName="oldPassword" />
+            <mat-error>Password must be 8+ chars, include a lowercase, uppercase, number, and special character.</mat-error>
+          </mat-form-field>
+
           <mat-form-field>
             <mat-label>New Password</mat-label>
             <input matInput type="password" formControlName="password" />
-            <mat-error>Password is required</mat-error>
+            <mat-error>Password must be 8+ chars, include a lowercase, uppercase, number, and special character.</mat-error>
           </mat-form-field>
   
           <mat-form-field>

@@ -21,7 +21,7 @@ export class ApiNewsFeedComponent {
   }[] = [];
 
   private readonly today: Date = new Date();
-  private readonly yesterday: Date = new Date(this.today.getDate() -1);
+  private readonly yesterday: Date = new Date(new Date().setDate(this.today.getDate() - 1));
 
 
   private formatDate(date: Date): string {
@@ -34,6 +34,7 @@ export class ApiNewsFeedComponent {
 
   ngOnInit() {
     this.displayNews();
+    console.log(this.formatDate(this.yesterday))
     console.log(this.request)
   }
 

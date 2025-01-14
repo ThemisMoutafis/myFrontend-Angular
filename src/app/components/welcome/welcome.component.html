@@ -3,8 +3,11 @@
       <i class="material-icons icon">coffee</i>
       <p>Welcome to Your Coffee Break!</p>
       <p>Sit back, relax, and enjoy your coffee. We're glad to have you here!</p>
+      @if(userService.user()){
+      <p>Check your <a href="./home" class="text-decoration-none"><strong>personalized news</strong></a></p>
+      }
       @if(!userService.user()){
-      <p>To see your personalized news while drinking your coffee, <a href="./register" class="text-decoration-none"> <strong> make an account</strong></a> and login!</p>
+      <p>To see your personalized news, <a href="./register" class="text-decoration-none"> <strong> make an account</strong></a> and <a href="./login" class="text-decoration-none"><strong>login!</strong></a></p>
     }
     </div>
   </div>

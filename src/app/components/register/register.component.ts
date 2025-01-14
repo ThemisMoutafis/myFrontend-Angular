@@ -7,7 +7,6 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,10 +21,10 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   userService = inject(UserService);
@@ -45,28 +44,33 @@ export class RegisterComponent {
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern('^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[@#$!%&*]).{8,}$')
+        Validators.pattern(
+          '^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[@#$!%&*]).{8,}$',
+        ),
       ]),
       confirmPassword: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern('^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[@#$!%&*]).{8,}$')
+        Validators.pattern(
+          '^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[@#$!%&*]).{8,}$',
+        ),
       ]),
     },
-    this.passwordConfirmPasswordValidator 
+    this.passwordConfirmPasswordValidator,
   );
-  
 
-  passwordConfirmPasswordValidator(control: AbstractControl): {[key:string]:boolean} |null {
-    const form = control as FormGroup
+  passwordConfirmPasswordValidator(
+    control: AbstractControl,
+  ): { [key: string]: boolean } | null {
+    const form = control as FormGroup;
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
 
-    if (password && confirmPassword && password!=confirmPassword){
-      form.get("confirmPassword")?.setErrors({passwordMismatch: true})
-      return {passwordMismatch : true }
+    if (password && confirmPassword && password != confirmPassword) {
+      form.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
     }
-    return null
+    return null;
   }
 
   onSubmit(value: any) {
@@ -74,51 +78,42 @@ export class RegisterComponent {
     this.checkOnSubmit();
   }
 
-  registerAnother() {
-    this.form.reset();
-    this.registrationStatus.success = false;
-    this.registrationStatus.message = 'Not attempted yet';
-  }
 
   checkOnSubmit() {
-    const email = this.form.get('email')?.value;
-    const countryName = this.form.get('countryName')?.value;
 
     const user: User = {
       username: this.form.get('username')?.value || '',
       firstname: this.form.get('firstname')?.value || '',
       lastname: this.form.get('lastname')?.value || '',
-      email: email || '',
+      email: this.form.get('email')?.value || '',
       password: this.form.get('password')?.value || '',
       birthdate: this.form.get('birthdate')?.value || '',
       countryName: this.form.get('countryName')?.value || '',
     };
-  
-   
-          this.userService.registerUser(user).subscribe({
-            next: (response) => {
-              console.log('No Errors:', response);
-              this.registrationStatus = { success: true, message: user.username+ ' successfully created' };
-            },
-            error: (errorResponse) => {
-              console.log('Registration Error:', errorResponse);
 
-              let detailedMessage='';
-              if (errorResponse.details) {
-                  errorResponse.details.forEach((detail: string) => {
-                      console.error('Validation error:', detail);
-                      detailedMessage += ` ${detail}`;
-                  });
-              }
-              if (!detailedMessage) {
-                detailedMessage = errorResponse.message;
-            }
-            this.registrationStatus = { success: false, message: detailedMessage };
-          },
+    this.userService.registerUser(user).subscribe({
+      next: (response) => {
+        console.log('No Errors:', response);
+        this.registrationStatus = {
+          success: true,
+          message: user.username + ' successfully created',
+        };
+      },
+      error: (errorResponse) => {
+        console.log('Registration Error:', errorResponse);
+
+        let detailedMessage = '';
+        if (errorResponse.details) {
+          errorResponse.details.forEach((detail: string) => {
+            console.error('Validation error:', detail);
+            detailedMessage += ` ${detail}`;
           });
-     
-        
-    
-    }
+        }
+        if (!detailedMessage) {
+          detailedMessage = errorResponse.message;
+        }
+        this.registrationStatus = { success: false, message: detailedMessage };
+      },
+    });
   }
-
+}

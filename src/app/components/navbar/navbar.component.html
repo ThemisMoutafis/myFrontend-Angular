@@ -1,66 +1,75 @@
 <nav class="navbar navbar-dark bg-primary justify-content-between">
-    <a class="navbar-brand ms-3 cursor-pointer" role="button" routerLink="home">
-        <mat-icon>home</mat-icon> <!-- Home icon -->
-    </a>
+  <a class="navbar-brand ms-3 cursor-pointer" role="button" routerLink="home">
+    <mat-icon>home</mat-icon>
+    <!-- Home icon -->
+  </a>
 
-    @if(user()?.role == 'USER') {
+  @if (user()?.role == "USER") {
     <span class="me-3 d-flex gap-2 text-light">
-        <!-- <mat-icon role="button" class="icon-link-hover" routerLink="update">
-            settings
-        </mat-icon> -->
-        <mat-icon role="button" class="icon-link-hover" [matMenuTriggerFor]="menu" >
-            <mat-icon>settings</mat-icon>
-        </mat-icon>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item [routerLink]="'/update'">
-                <mat-icon>update</mat-icon>
-                Update User Info
-              </button>
-            <button mat-menu-item [routerLink]="'/deactivate'">
-              <mat-icon>block</mat-icon>
-              <span>Deactivate account</span>
-            </button>
-          </mat-menu>
-        <a routerLink="login" class="text-light text-decoration-none"></a>
-            Welcome, {{user()?.firstname}}
-            <mat-icon role="button" (click)="logout()">logout</mat-icon>
-        
-         
+      <mat-icon
+        role="button"
+        class="icon-link-hover"
+        [matMenuTriggerFor]="menu"
+      >
+        <mat-icon>settings</mat-icon>
+      </mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="'/update'">
+          <mat-icon class="text-primary">update</mat-icon>
+          <span class="text-primary">Update Account</span>
+        </button>
+        <button mat-menu-item [routerLink]="'/deactivate'">
+          <mat-icon class="text-primary">block</mat-icon>
+          <span class="text-primary">Deactivate account</span>
+        </button>
+        <button mat-menu-item [routerLink]="'/info-table'">
+          <mat-icon class="text-primary">account_circle</mat-icon>
+          <span class="text-primary">User Information</span>
+        </button>
+      </mat-menu>
+      <a routerLink="login" class="text-light text-decoration-none"></a>
+      Welcome, {{ user()?.firstname }}
+      <mat-icon role="button" (click)="logout()">logout</mat-icon>
     </span>
-    }
-    @else if(user()?.role == 'ADMIN') {
-        <span class="me-3 d-flex gap-2 text-light">
-            <mat-icon role="button" class="icon-link-hover" [matMenuTriggerFor]="menu" >
-                <mat-icon>settings</mat-icon>
-            </mat-icon>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item [routerLink]="'/update'">
-                    <mat-icon>update</mat-icon>
-                    Update User Info
-                  </button>
-                <button mat-menu-item [routerLink]="'/deactivate'">
-                  <mat-icon>block</mat-icon>
-                  <span>Deactivate account</span>
-                </button>
-              </mat-menu>
-            <a routerLink="login" class="text-light text-decoration-none"></a>
-                Welcome Admin, {{user()?.firstname}}
-                <mat-icon role="button" (click)="logout()">logout</mat-icon>
-            
-             
-        </span>
-    } @else {
-
-        <span class="me-3 d-flex gap-2 text-light align-items-center">
-            <mat-icon role="button" class="icon-link-hover" routerLink="register">
-                person_add
-            </mat-icon>
-            <a routerLink="register" class="text-light text-decoration-none">Register now!</a> 
-            <mat-icon role="button" class="icon-link-hover" routerLink="login">
-                login
-            </mat-icon>
-            <a routerLink="login" class="text-light text-decoration-none">login</a> 
-        </span>
-        
-    }
+  } @else if (user()?.role == "ADMIN") {
+    <span class="me-3 d-flex gap-2 text-light">
+      <mat-icon
+        role="button"
+        class="icon-link-hover"
+        [matMenuTriggerFor]="menu"
+      >
+        <mat-icon>settings</mat-icon>
+      </mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="'/update'">
+          <mat-icon class="text-primary">update</mat-icon>
+          <span class="text-primary">Update Account</span>
+        </button>
+        <button mat-menu-item [routerLink]="'/deactivate'">
+          <mat-icon class="text-primary">block</mat-icon>
+          <span class="text-primary">Deactivate account</span>
+        </button>
+        <button mat-menu-item [routerLink]="'/info-table'">
+          <mat-icon class="text-primary">account_circle</mat-icon>
+          <span class="text-primary">User Information</span>
+        </button>
+      </mat-menu>
+      <a routerLink="login" class="text-light text-decoration-none"></a>
+      Welcome Admin, {{ user()?.firstname }}
+      <mat-icon role="button" (click)="logout()">logout</mat-icon>
+    </span>
+  } @else {
+    <span class="me-3 d-flex gap-2 text-light align-items-center">
+      <mat-icon role="button" class="icon-link-hover" routerLink="register">
+        person_add
+      </mat-icon>
+      <a routerLink="register" class="text-light text-decoration-none"
+        >Register now!</a
+      >
+      <mat-icon role="button" class="icon-link-hover" routerLink="login">
+        login
+      </mat-icon>
+      <a routerLink="login" class="text-light text-decoration-none">login</a>
+    </span>
+  }
 </nav>

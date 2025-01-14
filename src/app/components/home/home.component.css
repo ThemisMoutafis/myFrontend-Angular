@@ -1,0 +1,16 @@
+.bg-light-blue {
+    background-color: #cce4ff!important;
+    
+  }
+  
+  .news-feed {
+    background-color: white;
+    height: 100%; 
+  }
+  
+  @media (min-width: 1024px) {
+    .row.justify-content-center {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }

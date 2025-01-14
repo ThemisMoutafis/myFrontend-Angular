@@ -1,94 +1,95 @@
 @if (!updateStatus.success) {
-    <div class="d-flex justify-content-center align-items-center min-vh-100">
-      <div class="d-flex flex-column mt-2 w-50">
-        <!-- Show Error Message -->
-        @if (
-          updateStatus.message !== "Not attempted yet" &&
-          !updateStatus.success
-        ) {
-          <div class="alert alert-danger">
-            <strong>Error: </strong>{{ updateStatus.message }}
-          </div>
-        }
-  
-        <!-- Registration Form -->
-        <form [formGroup]="form" class="d-flex flex-column">
-  
-          <mat-form-field>
-            <mat-label>First Name</mat-label>
-            <input matInput type="text" formControlName="firstname" />
-            <mat-error>First Name is required</mat-error>
-          </mat-form-field>
-  
-          <mat-form-field>
-            <mat-label>Last Name</mat-label>
-            <input matInput type="text" formControlName="lastname" />
-            <mat-error>Last Name is required</mat-error>
-          </mat-form-field>
-  
-          <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input matInput type="text" formControlName="email" />
-            <mat-error>Email is required</mat-error>
-          </mat-form-field>
-  
-          <mat-form-field>
-            <mat-label>Birthdate</mat-label>
-            <input matInput type="date" formControlName="birthdate" />
-            <mat-error>Birthdate is required</mat-error>
-          </mat-form-field>
-  
-          <mat-form-field>
-            <mat-label>Country</mat-label>
-            <input matInput type="text" formControlName="countryName" />
-            <mat-error>Country is required</mat-error>
-          </mat-form-field>
-          
-          <mat-form-field>
-            <mat-label>Old Password</mat-label>
-            <input matInput type="password" formControlName="oldPassword" />
-            <mat-error>Password must be 8+ chars, include a lowercase, uppercase, number, and special character.</mat-error>
-          </mat-form-field>
+  <div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="d-flex flex-column mt-2 w-50">
+      <!-- Show Error Message -->
+      @if (
+        updateStatus.message !== "Not attempted yet" && !updateStatus.success
+      ) {
+        <div class="alert alert-danger">
+          <strong>Error: </strong>{{ updateStatus.message }}
+        </div>
+      }
 
-          <mat-form-field>
-            <mat-label>New Password</mat-label>
-            <input matInput type="password" formControlName="password" />
-            <mat-error>Password must be 8+ chars, include a lowercase, uppercase, number, and special character.</mat-error>
-          </mat-form-field>
-  
-          <mat-form-field>
-            <mat-label>Confirm New Password</mat-label>
-            <input matInput type="password" formControlName="confirmPassword" />
-            @if (form.get("confirmPassword")?.hasError("passwordMismatch")) {
-              <mat-error>Passwords do not match</mat-error>
-            }
-          </mat-form-field>
-  
-          <button
-            mat-flat-button
-            (click)="onSubmit(form.value)"
-            [disabled]="form.invalid"
+      <!-- Registration Form -->
+      <form [formGroup]="form" class="d-flex flex-column">
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input matInput type="text" formControlName="firstname" />
+          <mat-error>First Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput type="text" formControlName="lastname" />
+          <mat-error>Last Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput type="text" formControlName="email" />
+          <mat-error>Email is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Birthdate</mat-label>
+          <input matInput type="date" formControlName="birthdate" />
+          <mat-error>Birthdate is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <input matInput type="text" formControlName="countryName" />
+          <mat-error>Country is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Old Password</mat-label>
+          <input matInput type="password" formControlName="oldPassword" />
+          <mat-error
+            >Password must be 8+ chars, include a lowercase, uppercase, number,
+            and special character.</mat-error
           >
-            Update Info
-          </button>
-        </form>
-      </div>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>New Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error
+            >Password must be 8+ chars, include a lowercase, uppercase, number,
+            and special character.</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirm New Password</mat-label>
+          <input matInput type="password" formControlName="confirmPassword" />
+          @if (form.get("confirmPassword")?.hasError("passwordMismatch")) {
+            <mat-error>Passwords do not match</mat-error>
+          }
+        </mat-form-field>
+
+        <button
+          mat-flat-button
+          (click)="onSubmit(form.value)"
+          [disabled]="form.invalid"
+        >
+          Update Info
+        </button>
+      </form>
     </div>
-  } @else {
-    <!-- Success Message -->
-  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+  </div>
+} @else {
+  <!-- Success Message -->
+  <div
+    class="d-flex flex-column justify-content-center align-items-center mt-5"
+  >
     <div class="alert alert-success mt-2 w-50">
       <strong>Success: </strong>{{ updateStatus.message }}
     </div>
     <div>
-        <button
-        mat-flat-button
-        color="primary"
-        class="mt-2"
-        routerLink="../home"
-      >
+      <button mat-flat-button color="primary" class="mt-2" routerLink="../home">
         Go back
       </button>
+    </div>
   </div>
-  </div>
-  }
+}

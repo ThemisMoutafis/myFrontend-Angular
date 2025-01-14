@@ -1,4 +1,4 @@
 export interface MenuEntry {
-    text: string,
-    routerLink: string
+  text: string;
+  routerLink: string;
 }

@@ -1,0 +1,44 @@
+@if (this.userService.user()) {
+  <div class="text-center bg-light-blue"></div>
+  <div></div>
+  @for (article of stringNews; track article) {
+    <div>
+      @if (article.title != "[Removed]") {
+        <div class="card mb-3 border-primary">
+          <div class="card-header">
+            <h3 class="card-title text-primary">{{ article.title }}</h3>
+          </div>
+          <div
+            class="card-body text-primary d-flex flex-column align-items-center text-center"
+          >
+            <p class="card-text text-primary">{{ article.description }}</p>
+            <p class="card-text text-primary">
+              <strong>Author:</strong> {{ article.author || "Unknown" }}
+            </p>
+            <p class="mt-3">
+              <a
+                class="btn border-primary fw-bold px-4 py-2 text-primary hover-btn"
+                [href]="article.url"
+                target="_blank"
+              >
+                Click Here
+              </a>
+
+              <style>
+                .hover-btn:hover {
+                  background-color: #007bff; /* bg-primary */
+                  color: #ffffff !important; /* text-light */
+                  border-color: #007bff; /* maintain border color */
+                }
+              </style>
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+  }
+} @else {
+  <div class="mb-5 mt-2 text-center">
+    <h2 class="text-primary">Hello. Please login!</h2>
+  </div>
+}

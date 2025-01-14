@@ -1,0 +1,40 @@
+@if(userService.user()) {
+    <div class="container mt-5">
+        <div class="card">
+          <div class="card-header text-center bg-primary text-light">
+            <h4>Your Profile</h4>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center mb-4">Personal Information</h5>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Username</th>
+                  <td>{{ userService.user()?.username }}</td>
+                </tr>
+                <tr>
+                  <th>First Name</th>
+                  <td>{{ userService.user()?.firstname }}</td>
+                </tr>
+                <tr>
+                  <th>Last Name</th>
+                  <td>{{ userService.user()?.lastname }}</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{{ userService.user()?.email }}</td>
+                </tr>
+                <tr>
+                  <th>Date of Birth</th>
+                  <td>{{ userService.user()?.dateOfBirth }}</td>
+                </tr>
+                <tr>
+                  <th>Country</th>
+                  <td>{{ userService.user()?.countryName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+}

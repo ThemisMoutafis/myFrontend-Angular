@@ -9,15 +9,31 @@ import { UserUpdateComponent } from './components/user-update/user-update.compon
 import { authGuard } from './shared/guards/auth.guard';
 import { adminGuard } from './shared/guards/admin.guard';
 import { DeactivateComponent } from './components/deactivate/deactivate.component';
+import { ApiNewsFeedComponent } from './components/api-news-feed/api-news-feed.component';
+import { PersonalInfoTableComponent } from './components/personal-info-table/personal-info-table.component';
 
 export const routes: Routes = [
-    {path:'', redirectTo:'/welcome',pathMatch:'full'},
-    {path:'login',component:LoginComponent},
-    {path:'welcome',component:WelcomeComponent},
-    {path:'register',component:RegisterComponent},
-    {path:'welcome',component:NavbarComponent},
-    {path:'home',component:HomeComponent,canActivate:[authGuard]},
-    {path:'deactivate',component:DeactivateComponent,canActivate:[authGuard]},
-    {path:'administration',component:AdministrationComponent,canActivate:[adminGuard]},
-    {path:'update',component:UserUpdateComponent,canActivate:[authGuard]}
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'welcome', component: WelcomeComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'welcome', component: NavbarComponent },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'news', component: ApiNewsFeedComponent, canActivate: [authGuard] },
+  {
+    path: 'info-table',
+    component: PersonalInfoTableComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'deactivate',
+    component: DeactivateComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'administration',
+    component: AdministrationComponent,
+    canActivate: [adminGuard],
+  },
+  { path: 'update', component: UserUpdateComponent, canActivate: [authGuard] },
 ];
